@@ -16,7 +16,7 @@ var s3Handler *handlers.S3Handler
 
 func main() {
 	sesHandler = handlers.InitSESHandler(model.Region, model.EmailSender, model.EmailReceiver)
-	s3Handler = handlers.InitS3Handler(model.Region, model.S3SrcBucket, model.S3DestBucket, model.S3SrcBucket, model.S3MetadataObjectKey)
+	s3Handler = handlers.InitS3Handler(model.Region, model.S3SrcBucket, model.S3DestBucket, model.S3MetadataBucket, model.S3MetadataObjectKey)
 
 	lambda.Start(handler)
 }
@@ -31,7 +31,7 @@ func main() {
 */
 // todo: capture concrete type for event
 func handler(ctx context.Context, event map[string]interface{}) error {
-	st, et, _ := timeutil.FindTimeBoundOfPreviousDay(time.Now())
+	st, et, _ := timeutil.FindTimeBoundOfPreviousDay(time.Now().Add(24 * time.Hour))
 
 	metadata, err := s3Handler.GetMetadata(st, et)
 	if err != nil {
