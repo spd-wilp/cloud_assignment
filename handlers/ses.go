@@ -39,12 +39,12 @@ func InitSESHandler(region, sender, receiver string) *SESHandler {
 			<br />
 			<table style="border-collapse: collapse;font-family: Tahoma, Geneva, sans-serif;">
 				<tr>
-					<th style="background-color: #54585d;color: #ffffff;font-weight: bold;font-size: 13px;border: 1px solid #54585d;">Object Name</th>
-					<th style="background-color: #54585d;color: #ffffff;font-weight: bold;font-size: 13px;border: 1px solid #54585d;">Object URI</th>
-					<th style="background-color: #54585d;color: #ffffff;font-weight: bold;font-size: 13px;border: 1px solid #54585d;">Object Type</th>
-					<th style="background-color: #54585d;color: #ffffff;font-weight: bold;font-size: 13px;border: 1px solid #54585d;">Object Size (Byte)</th>
+					<th style="background-color: #54585d;color: #ffffff;font-weight: bold;font-size: 13px;border: 1px solid #54585d;">Name</th>
+					<th style="background-color: #54585d;color: #ffffff;font-weight: bold;font-size: 13px;border: 1px solid #54585d;">URI</th>
+					<th style="background-color: #54585d;color: #ffffff;font-weight: bold;font-size: 13px;border: 1px solid #54585d;">Type</th>
+					<th style="background-color: #54585d;color: #ffffff;font-weight: bold;font-size: 13px;border: 1px solid #54585d;">Size (Byte)</th>
 					<th style="background-color: #54585d;color: #ffffff;font-weight: bold;font-size: 13px;border: 1px solid #54585d;">Last Modified Time (GMT)</th>
-					<th style="background-color: #54585d;color: #ffffff;font-weight: bold;font-size: 13px;border: 1px solid #54585d;">Thumbnail URI</th>
+					<th style="background-color: #54585d;color: #ffffff;font-weight: bold;font-size: 13px;border: 1px solid #54585d;">Thumbnail</th>
 				</tr>
 				{{ range .}}
 					<tr style="background-color: #f9fafb;">

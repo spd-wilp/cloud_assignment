@@ -138,6 +138,8 @@ func (handler S3Handler) GetMetadata(st, et int64) ([]model.ObjectMetadata, erro
 	defer out.Body.Close()
 
 	var curMetadata []model.ObjectMetadata
+	metaKeyMap := make(map[string]model.ObjectMetadata)
+	var uniqMetadata []model.ObjectMetadata
 
 	err = json.NewDecoder(out.Body).Decode(&curMetadata)
 	if err != nil {
@@ -145,14 +147,31 @@ func (handler S3Handler) GetMetadata(st, et int64) ([]model.ObjectMetadata, erro
 		return nil, err
 	}
 
+	// fing uniq metadata entries, there might be duplicate ones due to multiple lamdba runs / if same file is deleted and re-uploaded
+	for _, metadata := range curMetadata {
+		data, exists := metaKeyMap[metadata.Name]
+		if !exists {
+			metaKeyMap[metadata.Name] = metadata
+		} else {
+			// keep the latest modification time
+			if data.LastModified > metadata.LastModified {
+				metaKeyMap[metadata.Name] = data
+			}
+		}
+	}
+
+	for _, data := range metaKeyMap {
+		uniqMetadata = append(uniqMetadata, data)
+	}
+
 	// return all
 	if st < 0 || et < 0 {
-		return curMetadata, nil
+		return uniqMetadata, nil
 	}
 
 	// filter based on time
 	filteredMetadata := make([]model.ObjectMetadata, 0)
-	for _, metadata := range curMetadata {
+	for _, metadata := range uniqMetadata {
 		if metadata.LastModified >= st && metadata.LastModified <= et {
 			filteredMetadata = append(filteredMetadata, metadata)
 		}
