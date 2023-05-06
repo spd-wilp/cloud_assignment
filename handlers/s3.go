@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"io"
 	"log"
+	"sort"
 	"time"
 
 	"github.com/aws/aws-lambda-go/events"
@@ -163,6 +164,11 @@ func (handler S3Handler) GetMetadata(st, et int64) ([]model.ObjectMetadata, erro
 	for _, data := range metaKeyMap {
 		uniqMetadata = append(uniqMetadata, data)
 	}
+
+	// sort by time
+	sort.Slice(uniqMetadata, func(i, j int) bool {
+		return uniqMetadata[i].LastModified < uniqMetadata[j].LastModified
+	})
 
 	// return all
 	if st < 0 || et < 0 {
