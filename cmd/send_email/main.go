@@ -31,7 +31,7 @@ func main() {
 */
 // todo: capture concrete type for event
 func handler(ctx context.Context, event map[string]interface{}) error {
-	st, et, _ := timeutil.FindTimeBoundOfPreviousDay(time.Now().Add(24 * time.Hour))
+	st, et, _ := timeutil.FindTimeBoundOfPreviousDay(time.Now())
 
 	metadata, err := s3Handler.GetMetadata(st, et)
 	if err != nil {
