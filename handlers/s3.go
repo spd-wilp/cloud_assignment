@@ -68,13 +68,15 @@ func (handler S3Handler) GenerateAndStoreThumbnailForObjects(objects []events.S3
 		} else {
 			log.Printf("skipping thumbnail generation as object is not an image, src_object_key=%s", object.Key)
 		}
+		t := time.Now()
 		objectDetails = append(objectDetails, model.ObjectMetadata{
-			Name:         object.Key,
-			SourceURI:    handler.generateResourceURI(handler.srcBucket, object.Key),
-			LastModified: time.Now().Unix(),
-			Size:         object.Size,
-			Type:         objectType,
-			ThumbnailURI: thumbnailURI,
+			Name:            object.Key,
+			SourceURI:       handler.generateResourceURI(handler.srcBucket, object.Key),
+			LastModified:    t.Unix(),
+			LastModifiedStr: t.Format("3:04:05 PM"),
+			Size:            object.Size,
+			Type:            objectType,
+			ThumbnailURI:    thumbnailURI,
 		})
 	}
 
