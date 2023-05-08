@@ -24,7 +24,7 @@ func main() {
 Whenever a new object is uploaded in source s3 bucket, this will check
   - if uploaded object is an image (.jpg, .jpeg, .png)
   - if object is an image, then this will create a thumbnail and store that into the destination bucket
-  - adds metadata about all objects in RDS
+  - adds metadata about all objects in metadata.json in metadata bucket
 */
 func handler(ctx context.Context, event events.S3Event) error {
 	objects := make([]events.S3Object, 0)

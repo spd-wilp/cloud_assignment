@@ -22,14 +22,13 @@ func main() {
 }
 
 /*
-	Send emails with details displaying following information about objects uploaded the previous day
-		- s3 uri
-		- object name
-		- object size
-		- object type
-		- thumbnail uri
+Send emails with details displaying following information about objects uploaded the previous day
+  - s3 uri
+  - object name
+  - object size
+  - object type
+  - thumbnail uri
 */
-// todo: capture concrete type for event
 func handler(ctx context.Context, event map[string]interface{}) error {
 	st, et, _ := timeutil.FindTimeBoundOfPreviousDay(time.Now())
 
